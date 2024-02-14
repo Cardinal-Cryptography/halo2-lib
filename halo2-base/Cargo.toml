@@ -34,6 +34,7 @@ halo2_proofs = { git = "https://github.com/privacy-scaling-explorations/halo2.gi
 # Use PSE halo2 and halo2curves for compatibility when feature = "halo2-cc" is on
 halo2_proofs_cc = { git = "https://github.com/Cardinal-Cryptography/pse-halo2", branch = "halo2-cc", package = "halo2_proofs", features = [
     "circuit-params",
+    "derive_serde",
     "mock-kzg-params",
 ], optional = true }
 
