@@ -94,7 +94,7 @@ pub trait ScalarField: PrimeField + FromUniformBytes<64> + From<bool> + Hash + O
 // Later: will need to separate BigPrimeField from ScalarField when Goldilocks is introduced
 
 /// [ScalarField] that is ~256 bits long
-#[cfg(feature = "halo2-pse")]
+#[cfg(any(feature = "halo2-pse", feature = "halo2-cc"))]
 pub trait BigPrimeField = PrimeField<Repr = [u8; 32]> + ScalarField;
 
 /// Converts an [Iterator] of u64 digits into `number_of_limbs` limbs of `bit_len` bits returned as a [Vec].
@@ -250,7 +250,7 @@ pub fn decompose_fe_to_u64_limbs<F: ScalarField>(
         e.to_u64_limbs(number_of_limbs, bit_len)
     }
 
-    #[cfg(feature = "halo2-pse")]
+    #[cfg(any(feature = "halo2-pse", feature = "halo2-cc"))]
     {
         decompose_u64_digits_to_limbs(fe_to_biguint(e).iter_u64_digits(), number_of_limbs, bit_len)
     }
@@ -351,7 +351,7 @@ pub fn compose(input: Vec<BigUint>, bit_len: usize) -> BigUint {
 }
 
 /// Helper trait
-#[cfg(feature = "halo2-pse")]
+#[cfg(any(feature = "halo2-pse", feature = "halo2-cc"))]
 pub trait CurveAffineExt: CurveAffine {
     /// Returns the raw affine (X, Y) coordinantes
     fn into_coordinates(self) -> (Self::Base, Self::Base) {
@@ -359,7 +359,7 @@ pub trait CurveAffineExt: CurveAffine {
         (*coordinates.x(), *coordinates.y())
     }
 }
-#[cfg(feature = "halo2-pse")]
+#[cfg(any(feature = "halo2-pse", feature = "halo2-cc"))]
 impl<C: CurveAffine> CurveAffineExt for C {}
 
 mod scalar_field_impls {

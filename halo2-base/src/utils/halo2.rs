@@ -31,7 +31,7 @@ pub fn raw_assign_advice<'v, F: Field>(
     {
         region.assign_advice(column, offset, value)
     }
-    #[cfg(feature = "halo2-pse")]
+    #[cfg(any(feature = "halo2-pse", feature = "halo2-cc"))]
     {
         let value = value.map(|a| Into::<Assigned<F>>::into(a));
         region
@@ -57,7 +57,7 @@ pub fn raw_assign_fixed<F: Field>(
     {
         region.assign_fixed(column, offset, value)
     }
-    #[cfg(feature = "halo2-pse")]
+    #[cfg(any(feature = "halo2-pse", feature = "halo2-cc"))]
     {
         region
             .assign_fixed(
